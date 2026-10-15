@@ -1,0 +1,104 @@
+# App-specific configuration. Values are compiled into firmware by menuconfig;
+# do not commit the generated sdkconfig because it contains local credentials.
+menu "AIoT Voice Control"
+
+config APP_WIFI_SSID
+    string "Wi-Fi SSID (configure locally)"
+    default ""
+    help
+        Wi-Fi network name.
+
+config APP_WIFI_PASSWORD
+    string "Wi-Fi password (configure locally)"
+    default ""
+    help
+        Wi-Fi password.
+
+# This URL must use the computer's LAN IP address when called by the ESP32.
+config APP_SERVER_URL
+    string "Speech-to-text server URL"
+    default "http://192.168.1.100:8000/transcribe"
+    help
+        HTTP POST endpoint that receives a WAV file and returns transcription JSON. Use the PC LAN IP, not 127.0.0.1.
+
+config APP_MIC_BCLK_GPIO
+    int "INMP441 BCLK GPIO"
+    range 0 48
+    default 14
+
+config APP_MIC_WS_GPIO
+    int "INMP441 WS/LRCLK GPIO"
+    range 0 48
+    default 15
+
+config APP_MIC_DOUT_GPIO
+    int "INMP441 DOUT GPIO"
+    range 0 48
+    default 16
+
+config APP_MIC_SLOT_RIGHT
+    bool "INMP441 uses RIGHT slot"
+    default n
+    help
+        Enable this only if the INMP441 L/R pin is wired for the RIGHT I2S slot.
+
+config APP_SPK_BCLK_GPIO
+    int "MAX98357A BCLK GPIO"
+    range 0 48
+    default 17
+
+config APP_SPK_WS_GPIO
+    int "MAX98357A LRCLK/WS GPIO"
+    range 0 48
+    default 18
+
+config APP_SPK_DOUT_GPIO
+    int "MAX98357A DIN GPIO"
+    range 0 48
+    default 8
+
+config APP_LED_GPIO
+    int "Recording LED GPIO"
+    range 0 48
+    default 2
+
+# Audio memory is allocated as PCM_CAPACITY samples in PSRAM per buffer.
+config APP_MAX_RECORD_SEC
+    int "Maximum recording length (seconds)"
+    range 1 30
+    default 10
+
+# VAD silence is measured in complete AFE fetch frames.
+config APP_SILENCE_MS
+    int "Silence duration to end recording after command (ms)"
+    range 256 5000
+    default 1200
+
+config APP_COMMAND_START_TIMEOUT_MS
+    int "Command-start timeout after wake word (ms)"
+    range 1500 10000
+    default 4000
+    help
+        Time allowed for the user to begin a command after saying the wake word. If no speech starts, the firmware returns to wake-word standby.
+
+config APP_VAD_MIN_SPEECH_MS
+    int "AFE VAD minimum speech duration (ms)"
+    range 64 2000
+    default 128
+
+config APP_VAD_MIN_NOISE_MS
+    int "AFE VAD minimum noise duration (ms)"
+    range 128 5000
+    default 1000
+
+config APP_VAD_DELAY_MS
+    int "AFE VAD speech delay/cache (ms)"
+    range 64 2000
+    default 256
+
+config APP_HTTP_TIMEOUT_MS
+    int "HTTP timeout (ms)"
+    range 1000 60000
+    default 15000
+
+endmenu

@@ -1,0 +1,4 @@
+# ESP-SR supplies AFE, WakeNet, VAD, NS and AEC; cJSON parses the STT reply.
+dependencies:
+  espressif/esp-sr: "~2.5.5"
+  espressif/cjson: "^1.7.19"

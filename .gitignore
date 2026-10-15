@@ -1,0 +1,30 @@
+# ESP-IDF generated output
+/build/
+/build_*/
+/managed_components/
+/sdkconfig
+/sdkconfig.old
+/sdkconfig.backup
+/.component_hash
+/.idf_component_manager.lock
+
+# Local configuration can contain Wi-Fi credentials
+/sdkconfig.local
+
+# Python virtual environments and generated caches
+/server/.venv/
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+/server/.pytest_cache/
+
+# Private AEC/audio captures and generated recordings
+/server/captures/
+*.wav
+
+# Editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
