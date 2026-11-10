@@ -1,0 +1,34 @@
+menu "Voice assistant"
+config VA_NS_ENABLE
+    bool "Enable WebRTC microphone noise suppression"
+    default y
+    help
+        Process microphone audio through ESP-SR WebRTC NS before Opus upload.
+        Disable for comparison with the raw microphone path.
+choice VA_STAGE
+    prompt "Bring-up stage"
+    default VA_STAGE_SERVER
+config VA_STAGE_HW_TEST
+    bool "Stage 1: automatic mic/speaker hardware check"
+config VA_STAGE_AFE_TEST
+    bool "Stage 2: WakeNet/AFE with local playback"
+config VA_STAGE_SERVER
+    bool "Stage 3: WakeNet/AFE + Opus + voice server"
+endchoice
+config VA_WIFI_SSID
+    string "Wi-Fi SSID"
+    default ""
+config VA_WIFI_PASSWORD
+    string "Wi-Fi password"
+    default ""
+config VA_DEVICE_WS_URI
+    string "Device WebSocket URI (/ws/device)"
+    default "ws://192.168.1.10:8000/ws/device"
+config VA_DEVICE_TOKEN
+    string "Device token (optional)"
+    default ""
+config VA_WAKE_WORD_TEXT
+    string "Wake phrase reported to server"
+    default "Hi ESP"
+    depends on VA_STAGE_SERVER
+endmenu
